@@ -40,6 +40,7 @@ class WordCubit extends Cubit<WordCubitState> {
     WordPair('Accounting ', 'and Payroll'),
     WordPair('Reporting and ', 'Analytics'),
     WordPair('Credit Card ', 'Processing'),
+    WordPair('LOU ', 'App'),
   ];
 
   int _currentIndex = 0;
@@ -93,7 +94,7 @@ class WordCubitState {
   WordCubitState({required this.current, required this.favorites, required this.ascending});
 
   factory WordCubitState.initial() {
-    return WordCubitState(current: WordPair('Evosus ', 'Theme'), favorites: [], ascending: true);
+    return WordCubitState(current: WordPair('LOU ', 'App'), favorites: [], ascending: true);
   }
 }
 
