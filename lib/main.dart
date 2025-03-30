@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
 }
 
 class WordCubit extends Cubit<WordCubitState> {
-  // Predefined list of word pairs
   final List<WordPair> _wordList = [
     WordPair('Customer Relationship Management ', '(CRM)'),
     WordPair('Point of Sale ', '(POS)'),
@@ -48,7 +47,6 @@ class WordCubit extends Cubit<WordCubitState> {
   WordCubit() : super(WordCubitState.initial());
 
   void getNext() {
-    // Cycle through the predefined list of words
     _currentIndex = (_currentIndex + 1) % _wordList.length;
     emit(WordCubitState(
       current: _wordList[_currentIndex],
@@ -126,24 +124,34 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Row(
             children: [
               SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFD06A32), Color(0xFF5A6D75)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.spa),
-                      label: Text('Favorites'),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
+                  ),
+                  child: NavigationRail(
+                    backgroundColor: Colors.transparent,
+                    extended: constraints.maxWidth >= 600,
+                    destinations: [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home, color: Colors.white),
+                        label: Text('Home', style: TextStyle(color: Colors.white)),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.spa, color: Colors.white),
+                        label: Text('Favorites', style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedIndex = value;
+                      });
+                    },
+                  ),
                 ),
               ),
               Expanded(
