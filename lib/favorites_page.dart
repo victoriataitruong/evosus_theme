@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'main.dart'; // Ensure this points to where WordCubit is defined
 
 class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({super.key});
+
   @override
   FavoritesPageState createState() => FavoritesPageState();
 }
