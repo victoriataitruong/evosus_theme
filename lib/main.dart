@@ -2,8 +2,12 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'favorites_page.dart'; // ✅ Ensure FavoritesPage is imported
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); // Enables full-screen mode
   runApp(MyApp());
 }
 
