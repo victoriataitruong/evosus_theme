@@ -174,6 +174,26 @@ class GeneratorPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Positioned widget to move the image to the upper-left
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(20), // Adjust padding as needed
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center, // Center the text horizontally
+                    mainAxisAlignment: MainAxisAlignment.center,  // Center the content vertically
+                    children: [
+                       Image.asset(
+                        'assets/images/evosus.png',
+                        width: 150,  // Set width to 100
+                        height: 150, // Set height to 100
+                      ),
+                      SizedBox(height: 5), // Reduced space between image and text
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               BigCard(pair: pair),
               SizedBox(height: 10),
               Row(
