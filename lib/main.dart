@@ -128,8 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(''),
-            backgroundColor: Colors.white,
+         toolbarHeight: 0.0,
+         backgroundColor: Color(0xFFD06A32),
             actions: [
             ],
           ),
