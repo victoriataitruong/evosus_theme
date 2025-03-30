@@ -64,13 +64,19 @@ class FavoritesPageState extends State<FavoritesPage> {
                       itemCount: filteredFavorites.length,
                       itemBuilder: (context, index) {
                         final pair = filteredFavorites[index];
+                        bool isFavorite = state.favorites.contains(pair); // Check if it's in favorites
                         return ListTile(
                           leading: Container(
                             width: 25,  // Set width of the image
                             height: 25, // Set height of the image
                             child: Image.asset('assets/images/evosus_logo.png'),
                           ),
-                          title: Text(pair.asLowerCase),
+                          title: Tooltip(
+                            message: isFavorite
+                                ? 'This word is in your favorites!'  // More informative tooltip for added favorites
+                                : 'Click to add to favorites',  // Tooltip for not yet added
+                            child: Text(pair.asLowerCase),
+                          ),
                           trailing: IconButton(
                             icon: Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
