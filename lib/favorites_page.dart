@@ -66,7 +66,7 @@ class FavoritesPageState extends State<FavoritesPage> {
                         final pair = filteredFavorites[index];
                         bool isFavorite = state.favorites.contains(pair); // Check if it's in favorites
                         return ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             width: 25,  // Set width of the image
                             height: 25, // Set height of the image
                             child: Image.asset('assets/images/evosus_logo.png'),

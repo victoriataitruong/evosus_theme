@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); // Enables full-screen mode
   runApp(MyApp());
 }
@@ -19,7 +18,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => WordCubit(),
       child: MaterialApp(
-        title: 'Evosus Theme App',
+        title: 'Evosus Favorites',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: Color(0xFFD06A32),
@@ -127,6 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
+          appBar: AppBar(
+            title: Text(''),
+            backgroundColor: Colors.white,
+            actions: [
+            ],
+          ),
           body: Row(
             children: [
               SafeArea(
@@ -138,25 +144,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: NavigationRail(
-                    backgroundColor: Colors.transparent,
-                    extended: constraints.maxWidth >= 600,
-                    destinations: [
-                      NavigationRailDestination(
-                        icon: Icon(Icons.home, color: Colors.white),
-                        label: Text('Home', style: TextStyle(color: Colors.white)),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.spa, color: Colors.white),
-                        label: Text('Favorites', style: TextStyle(color: Colors.white)),
-                      ),
-                    ],
-                    selectedIndex: selectedIndex,
-                    onDestinationSelected: (value) {
-                      setState(() {
-                        selectedIndex = value;
-                      });
-                    },
+                  child: SizedBox(
+                    width: constraints.maxWidth >= 600 ? 200 : 80, // Ensure proper width for navigation rail
+                    child: NavigationRail(
+                      backgroundColor: Colors.transparent,
+                      extended: constraints.maxWidth >= 600,
+                      destinations: [
+                        NavigationRailDestination(
+                          icon: Icon(Icons.home, color: Colors.white),
+                          label: Text('Home', style: TextStyle(color: Colors.white)),
+                        ),
+                        NavigationRailDestination(
+                          icon: Icon(Icons.spa, color: Colors.white),
+                          label: Text('Favorites', style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                      selectedIndex: selectedIndex,
+                      onDestinationSelected: (value) {
+                        setState(() {
+                          selectedIndex = value;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -199,7 +208,7 @@ class GeneratorPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center, // Center the text horizontally
                     mainAxisAlignment: MainAxisAlignment.center,  // Center the content vertically
                     children: [
-                       Image.asset(
+                      Image.asset(
                         'assets/images/evosus.png',
                         width: 150,  // Set width to 100
                         height: 150, // Set height to 100
