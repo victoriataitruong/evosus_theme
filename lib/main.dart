@@ -1,15 +1,16 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'favorites_page.dart'; // ✅ Ensure FavoritesPage is imported
+import 'favorites_page.dart'; 
 import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); // Enables full-screen mode
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky); // Enables immersive full-screen mode
   runApp(MyApp());
 }
 
+/// The main widget of the application, which sets up the app structure
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// Cubit for managing the word pair generation and favorites state
 class WordCubit extends Cubit<WordCubitState> {
+  // List of predefined word pairs to be displayed in the app
   final List<WordPair> _wordList = [
     WordPair('Customer Relationship Management ', '(CRM)'),
     WordPair('Point of Sale ', '(POS)'),
@@ -50,6 +53,7 @@ class WordCubit extends Cubit<WordCubitState> {
 
   WordCubit() : super(WordCubitState.initial());
 
+  /// Moves to the next word pair in the list, cycling through them.
   void getNext() {
     _currentIndex = (_currentIndex + 1) % _wordList.length;
     emit(WordCubitState(
@@ -59,6 +63,7 @@ class WordCubit extends Cubit<WordCubitState> {
     ));
   }
 
+  /// Toggles the favorite status of the current word pair.
   void toggleFavorite() {
     final newFavorites = List<WordPair>.from(state.favorites);
     if (newFavorites.contains(state.current)) {
@@ -70,12 +75,14 @@ class WordCubit extends Cubit<WordCubitState> {
     emit(WordCubitState(current: state.current, favorites: newFavorites, ascending: state.ascending));
   }
 
+  /// Removes a specific word pair from the favorites list.
   void removeFavorite(WordPair pair) {
     final newFavorites = List<WordPair>.from(state.favorites);
     newFavorites.remove(pair);
     emit(WordCubitState(current: state.current, favorites: newFavorites, ascending: state.ascending));
   }
 
+  /// Toggles the sorting order of the favorites list between ascending and descending.
   void toggleSortOrder() {
     final newOrder = !state.ascending;
     final sortedFavorites = List<WordPair>.from(state.favorites)
@@ -83,11 +90,14 @@ class WordCubit extends Cubit<WordCubitState> {
     emit(WordCubitState(current: state.current, favorites: sortedFavorites, ascending: newOrder));
   }
 
+  /// Helper method to sort the list of favorites based on the current order.
   void _sortFavorites(List<WordPair> favorites) {
     favorites.sort((a, b) => state.ascending ? a.asLowerCase.compareTo(b.asLowerCase) : b.asLowerCase.compareTo(a.asLowerCase));
   }
 }
 
+/// Represents the state of the WordCubit, including the current word pair,
+/// the list of favorites, and the current sorting order.
 class WordCubitState {
   final WordPair current;
   final List<WordPair> favorites;
@@ -95,11 +105,13 @@ class WordCubitState {
 
   WordCubitState({required this.current, required this.favorites, required this.ascending});
 
+  /// Factory method to return an initial state with a default word pair and empty favorites list.
   factory WordCubitState.initial() {
     return WordCubitState(current: WordPair('LOU ', 'App'), favorites: [], ascending: true);
   }
 }
 
+/// The home page widget which contains navigation and the content display.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -112,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Decides which page to display based on selected navigation index
     Widget page;
     switch (selectedIndex) {
       case 0:
@@ -128,10 +141,9 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-         toolbarHeight: 0.0,
-         backgroundColor: Color(0xFFD06A32),
-            actions: [
-            ],
+            toolbarHeight: 0.0,
+            backgroundColor: Color(0xFFD06A32),
+            actions: [],
           ),
           body: Row(
             children: [
@@ -145,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   child: SizedBox(
-                    width: constraints.maxWidth >= 600 ? 200 : 80, // Ensure proper width for navigation rail
+                    width: constraints.maxWidth >= 600 ? 200 : 80, // Adjust width for navigation rail
                     child: NavigationRail(
                       backgroundColor: Colors.transparent,
                       extended: constraints.maxWidth >= 600,
@@ -183,6 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+/// The generator page displays the word pair and allows users to like or skip it.
 class GeneratorPage extends StatelessWidget {
   const GeneratorPage({super.key});
 
@@ -245,6 +258,7 @@ class GeneratorPage extends StatelessWidget {
   }
 }
 
+/// A large card displaying a word pair.
 class BigCard extends StatelessWidget {
   const BigCard({super.key, required this.pair});
 
